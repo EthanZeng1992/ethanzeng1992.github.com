@@ -1,0 +1,11 @@
+paginate: 5
+
+nav:
+  - text: 首页
+    url: /index.html
+  - text: 文章列表
+    url: /archives.html
+  - text: 标签分类
+    url: /tags.html
+  - text: 关于我
+    url: /aboutme.html

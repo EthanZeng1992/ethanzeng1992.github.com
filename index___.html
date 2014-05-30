@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="author" content="ygm">
+<meta name="description" content="ygm blog">
+<title>GM的博客</title>
+<link rel="stylesheet" type="text/css" href="./assets/css/page.css">
+<style type="text/css">
+.banner{position: absolute;}
+.menu-wrap{position: relative;}
+</style>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img src="./assets/img/b1.jpg" height="300" width="100%">
+  </div>
+  <div class="header">
+      <div class="logo">GM</div>
+      <div class="subtit">我的世界有你们而精彩</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+                
+              
+              <li class="active">
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/tags.html">标签分类</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+
+<div class="article-wrap">
+    <div class="article">
+        <h3 class="article-tit"><a href="/2013/11/14/hello-world.html">生产的文章</a></h3>
+        <div class="article-time">14 Nov 2013</div>
+        <div class="article-cont">
+          <p>
+              时间这么一折腾就没了。。。
+          </p>
+          <div class="more">
+            <a href="/2013/11/14/hello-world.html">查看更多</a>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="article-wrap">
+    <div class="article">
+        <h3 class="article-tit"><a href="/2013/11/13/hello-world.html">生产的文章</a></h3>
+        <div class="article-time">13 Nov 2013</div>
+        <div class="article-cont">
+          <p>
+              时间这么一折腾就没了。。。
+          </p>
+          <div class="more">
+            <a href="/2013/11/13/hello-world.html">查看更多</a>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="article-wrap">
+    <div class="article">
+        <h3 class="article-tit"><a href="/2013/11/12/hello-world.html">生产的文章</a></h3>
+        <div class="article-time">12 Nov 2013</div>
+        <div class="article-cont">
+          <p>
+              时间这么一折腾就没了。。。
+          </p>
+          <div class="more">
+            <a href="/2013/11/12/hello-world.html">查看更多</a>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="article-wrap">
+    <div class="article">
+        <h3 class="article-tit"><a href="/2013/11/11/hello-world.html">生产的文章</a></h3>
+        <div class="article-time">11 Nov 2013</div>
+        <div class="article-cont">
+          <p>
+              时间这么一折腾就没了。。。
+          </p>
+          <div class="more">
+            <a href="/2013/11/11/hello-world.html">查看更多</a>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="article-wrap">
+    <div class="article">
+        <h3 class="article-tit"><a href="/2013/11/10/hello-world.html">生产的文章</a></h3>
+        <div class="article-time">10 Nov 2013</div>
+        <div class="article-cont">
+          <p>
+              时间这么一折腾就没了。。。
+          </p>
+          <div class="more">
+            <a href="/2013/11/10/hello-world.html">查看更多</a>
+          </div>
+        </div>
+    </div>
+</div>
+
+</div>
+       
+
+<div class="pager-wrap clearfix">
+    <div class="pager">
+        <ul>
+        
+            
+                <li class="current"><a>1</a></li>
+            
+        
+            
+                <li>
+                  <a href="/page2/">
+                    2
+                  </a>
+                </li>
+            
+        
+        </ul>
+    </div>
+</div>
+
+
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Develop by GM
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+<script src="/assets/js/rainyday.min.js"></script>
+<script type="text/javascript">
+    var rnum = Math.floor(Math.random()*5) + 1,
+        $bgrain = $("#bgrain");
+
+    $bgrain.attr("src","/assets/img/b" + rnum + ".jpg");
+
+    $bgrain.on("load",function() {
+        var engine = new RainyDay({
+            element: 'bgrain',  // ID of image element
+            blur: .5,               // Defines blur due to rain effect
+            opacity: 1,             // Opacity of rain drops
+            fps: 30                 // Frame rate per second
+        });
+        engine.rain([ [3, 3, 0.88], [5, 5, 0.9], [6, 2, 1] ], 100);
+    });
+</script>
+</body>
+</html>
