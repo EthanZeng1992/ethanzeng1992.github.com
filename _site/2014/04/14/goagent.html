@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Chrome with Goagent on ubuntu</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+      <div class="subtit">我的世界有你们而精彩</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/tags.html">标签分类</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Chrome with Goagent on ubuntu</h2>
+    <div class="detail-time">14 Apr 2014</div>
+    <div class="detail-cont">
+      <h4 id="install-chrome-on-ubuntu">Install chrome on ubuntu</h4>
+
+<p>Run the commands below in the terminal to install chrome on ubuntu.</p>
+
+<pre>
+<code id="code-customize">
+$ wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+$ sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" &gt;&gt; /etc/apt/sources.list.d/google-chrome.list'
+$ sudo apt-get update
+$ sudo apt-get install google-chrome-stable
+</code>
+</pre>
+
+<h4 id="add-goagent-to-work-with-chrome">Add goagent to work with chrome</h4>
+
+<p>Download the goagent, just click there: <a href="http://goo.gl/qFyRk">Goagent</a>, and then we need install some dependence, run the commands below.</p>
+
+<pre>
+<code id="code-customize">
+$ sudo apt-get install python-dev python-greenlet python-gevent python-vte python-openssl python-crypto python-appindicator
+$ sudo apt-get install python-dev python-pip &amp;&amp; sudo pip install gevent --upgrade
+$ sudo apt-get install python-openssl
+</code>
+</pre>
+
+<p>Upload: go to the folder: “goagent/server/” run command: <b>$ python uploader.zip</b>; Then import certificate</p>
+
+<pre>
+<code id="code-customize">
+$ sudo apt-get install libnss3-tools
+$ certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i 'path_to_goagent/local/CA.crt'
+</code>
+</pre>
+
+<p>Make goagent run in the background default, we need write shell script: goagent.sh</p>
+
+<script src="https://gist.github.com/EthanZeng1992/98237d187dc3f6f55831.js"></script>
+
+<p>Copy goagent.sh to folder (like: ~/soft/), then modify the file permission</p>
+
+<pre>
+<code id="code-customize">
+$ sudo cp goagent.sh ~/soft/         # copy goagent.sh to folder /soft
+$ chmod +x goagent.sh                # modify the file permission, in order to can be executed
+$ sudo vim /etc/init.d/rc.local      # edit file rc.local
+$ sh /home/your_name/soft/goagent.sh # add this line to below
+</code>
+</pre>
+
+<p>Reference:</p>
+
+<pre>
+<code id="code-customize">
+<a href="https://code.google.com/p/goagent/">https://code.google.com/p/goagent/</a>
+<a href="https://code.google.com/p/goagent/wiki/GoAgent_Linux">https://code.google.com/p/goagent/wiki/GoAgent_Linux</a>
+<a href="http://leowind.diandian.com/post/2012-07-04/40030165404">https://leowind.diandian.com/post/2012-07-04/40030165404</a>
+<a href="http://blog.csdn.net/marujunyy/article/details/8466255">https://blog.csdn.net/marujunyy/article/details/8466255</a>
+</code>
+</pre>
+
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>

@@ -100,7 +100,7 @@ a{text-decoration: none;}
   position: fixed;
   left: 50%;
   bottom: 100px;
-  margin-left: 400px;
+  margin-left: 500px;
   width: 38px;
   height: 38px;
   border-radius: 5px;
@@ -118,5 +118,5 @@ a{text-decoration: none;}
 
 .article-detail h2{font-size: 40px;color: #0088cc;padding: 30px 0;}
 .detail-time{color: #A7AAB1;}
-.detail-cont{padding: 20px 0;font-size: 14px;line-height: 30px;color: #333;}
+.detail-cont{padding: 20px 0;font-size: 16px;line-height: 30px;color: #333;}
 .detail-cont p{padding-bottom: 20px;}
