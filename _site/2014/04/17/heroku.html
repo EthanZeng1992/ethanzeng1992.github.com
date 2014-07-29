@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Deploy ROR on Heroku</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+      <div class="subtit">我的世界有你们而精彩</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/tags.html">标签分类</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Deploy ROR on Heroku</h2>
+    <div class="detail-time">17 Apr 2014</div>
+    <div class="detail-cont">
+      <h4 id="install-heroku-toolbelt">Install heroku toolbelt</h4>
+
+<pre>
+<code id="code-customize">
+$ wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+</code>
+</pre>
+
+<h4 id="heroku-login">heroku login</h4>
+
+<pre>
+<code id="code-customize">
+$ heroku login
+Enter your Heroku credentials.
+Email: example@example.com
+Password:
+</code>
+</pre>
+
+<p>If not show below words, we need add keys to heroku.</p>
+
+<pre>
+<code id="code-customize">
+Could not find an existing public key.
+Would you like to generate one? [Yn]
+Generating new SSH public key.
+Uploading ssh public key /Users/adam/.ssh/id_rsa.pub
+</code>
+</pre>
+
+<p>Run commands to add keys to heroku: </p>
+
+<p>first prompt we may Press enter at the first prompt to use the default file location, second and third prompt is to set password.</p>
+
+<pre>
+<code id="code-customize">
+$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/adam/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+$ heroku keys:add
+Found existing public key: /Users/adam/.ssh/id_rsa.pub
+Uploading SSH public key /Users/adam/.ssh/id_rsa.pub... done
+</code>
+</pre>
+
+<h4 id="install-postgresql">Install postgresql</h4>
+<pre>
+<code id="code-customize">
+$ sudo apt-get install postgresql-9.1  
+$ sudo apt-get install postgresql-server-dev-9.1
+</code>
+</pre>
+
+<h4 id="create-postgresql-user">Create postgresql user</h4>
+
+<pre>
+<code id="code-customize">
+$ sudo su
+$ su postgres
+$ createuser
+</code>
+</pre>
+
+<h4 id="config-local-app-for-heroku">Config local App for heroku</h4>
+
+<pre>
+<code id="code-customize">
+# Gemfile
+group :production do
+  gem 'rails_12factor', group: :production
+  gem 'pg'
+end
+ruby "2.1.1" # for rails 4
+</code>
+</pre>
+
+<p>[config/database.yml] remove “username: myapp”</p>
+
+<h4 id="deploy-your-application-to-heroku">Deploy your application to Heroku</h4>
+
+<pre>
+<code id="code-customize">
+# branch 'deploy' is only for heroku
+$ git checkout -b deploy
+$ heroku create app_name --addons heroku-postgresql
+Creating sleepy-cliffs-1680... done, stack is cedar
+http://sleepy-cliffs-1680.herokuapp.com/ | git@heroku.com:sleepy-cliffs-1680.git
+Git remote heroku added
+
+$ export RAILS_ENV=production
+$ rake db:drop db:setup
+$ rake assets:precompile
+$ git commit -m 'deploy for heroku'
+$ git push heroku deploy:master
+</code>
+</pre>
+
+<h4 id="visit-your-application">Visit your application</h4>
+
+<pre>
+<code id="code-customize">
+# ensure we have one dyno
+$ heroku ps:scale web=1
+
+# check the state of the app’s dynos
+$ heroku ps
+=== web (1X): `bin/rails server -p $PORT -e $RAILS_ENV`
+web.1: starting 2014/02/27 14:52:25 (~ 2m ago)
+
+# visit the app in our browser 
+$ heroku open
+Opening sleepy-cliffs-1680... done
+</code>
+</pre>
+
+<h4 id="deploy-in-the-future">Deploy in the future</h4>
+
+<pre>
+<code id="code-customize">
+$ git checkout deploy
+$ git merge master
+$ git push heroku deploy:master
+$ heroku run rake db:migrate
+</code>
+</pre>
+
+<h4 id="reference">Reference:</h4>
+
+<pre>
+<code id="code-customize">
+<a href="https://devcenter.heroku.com/articles/getting-started-with-rails4#local-workstation-setup">https://devcenter.heroku.com/articles/getting-started-with-rails4#local-workstation-setup</a>
+<a href="https://github.com/19wu/19wu/wiki/%E9%83%A8%E7%BD%B2%E5%88%B0-heroku#toc-rails4">https://github.com/19wu/19wu/wiki/%E9%83%A8%E7%BD%B2%E5%88%B0-heroku#toc-rails4</a>
+</code>
+</pre>
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>
