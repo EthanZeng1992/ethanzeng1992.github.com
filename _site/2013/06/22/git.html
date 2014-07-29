@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Try Git</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+      <div class="subtit">我的世界有你们而精彩</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/tags.html">标签分类</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Try Git</h2>
+    <div class="detail-time">22 Jun 2013</div>
+    <div class="detail-cont">
+      <h4 id="git-fetch">git fetch</h4>
+
+<p>命令使用格式:</p>
+
+<pre>
+<code id="code-customize">
+$ git fetch [remoteName] [branchName]
+</code>
+</pre>
+
+<p>当一个团队的其他成员提交了新的commit，并且push 到了远程，我们从远程获取最新版本到本地，暂时不merge: $ git fetch origin master; </p>
+
+<p>比较本地的仓库和远程的区别: $ git log -p master.. origin/master; </p>
+
+<p>然后再考虑是否合并,无误后合并：$ git merge origin/master.</p>
+
+<h4 id="git-pull">git pull</h4>
+
+<p>pull 与 fetch 的区别是：git pull 获取到远程版本后直接合并，而fetch 没有合并操作，所以fetch比pull更安全。</p>
+
+<pre>
+<code id="code-customize">
+$ git pull origin master
+</code>
+</pre>
+
+<h4 id="git-diff">git diff</h4>
+
+<p>查看unstaged文件相对于前一次commit的改变：</p>
+
+<pre>
+<code id="code-customize">
+$ git diff
+</code>
+</pre>
+
+<p>查看staged文件相对于前一次commit的改变：$ git diff –cached [或–staged]; </p>
+
+<p>查看所有相对于前一次commit的改变：$ git diff HEAD ;</p>
+
+<p>查看当前目录相对于某一个分支的不同：git diff [branchName];</p>
+
+<p>查看某个文件相对于前一次commit的改变：$ git diff HEAD – [fileName];</p>
+
+<p>如果不是查看每个文件的详细差别，而是统计一下有哪些文件被改动，有多少行被改动: $ git diff –stat.</p>
+
+<h4 id="git-">git 撤销</h4>
+
+<p>如果你现在的工作目录里搞的一团乱麻, 但是你现在还没有把它们提交(commit); 你可以通过下面的命令, 让工作目录回到上次提交时的状态(last committed state):</p>
+
+<pre>
+<code id="code-customize">
+$ git reset --hard HEAD
+</code>
+</pre>
+
+<p>这条件命令会把你工作目录中所有未提交的内容清空(当然这不包括未置于版控制下的文件 untracked files). 从另一种角度来说, 这会让”git diff” 和”git diff –cached”命令的显示都变为空.如果你只是要恢复一个文件至上次提交时的状态,如”hello.rb”: $ git checkout – hello.rb;</p>
+
+<p>取消最近n次commit,并且撤出暂存区，最近第n次commit之后所修改的内容都不会删除,只是未提交commit：$ git reset HEAD~n ;</p>
+
+<p>删除最近第n次commit即以后的所有内容，回退到最近第n+1次commit的状态: $ git reset –hard HEAD~n;</p>
+
+<p>对最近第(n+1)次commit做相反的操作,不对其他commit有影响：$ git revert HEAD~n.</p>
+
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>
