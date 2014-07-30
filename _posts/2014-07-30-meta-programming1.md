@@ -15,7 +15,7 @@ def to_alphanumeric(s)
 end
 #unit test
 require 'test/unit'
-class ToAlphanumericTest < Test::Unit::TestCase
+class ToAlphanumericTest &lt; Test::Unit::TestCase
   def test_strips_non_alphanumeric_characters
     assert_equal '3 the Magic Number', to_alphanumeric('#3, the *Magic, Number* ?')
   end
@@ -34,7 +34,7 @@ class String
 end
 #unit test
 require 'test/unit'
-class StringExtensionsTest < Test::Unit::TestCase
+class StringExtensionsTest &lt; Test::Unit::TestCase
   def test_strips_non_alphanumeric_characters
     assert_equal '3 the Magic Number', '#3, the *Magic, Number* ?'.to_alphanumeric
   end
