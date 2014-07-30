@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Ruby 元编程： 对象模型</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+      <div class="subtit">我的世界有你们而精彩</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/tags.html">标签分类</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Ruby 元编程： 对象模型</h2>
+    <div class="detail-time">30 Jul 2014</div>
+    <div class="detail-cont">
+      <h4 id="open-classes-">Open classes [打开类]</h4>
+
+<p>有一个函数用来去掉字符串中的标点符号和特殊字符，自保留字母，数字，空格。</p>
+
+<pre>
+<code id="code-customize">
+def to_alphanumeric(s)
+  s.gsub /[^\w\s]/, ''
+end
+#unit test
+require 'test/unit'
+class ToAlphanumericTest &lt; Test::Unit::TestCase
+  def test_strips_non_alphanumeric_characters
+    assert_equal '3 the Magic Number', to_alphanumeric('#3, the *Magic, Number* ?')
+  end
+end
+</code>
+</pre>
+
+<p>这个to_alphanumeric方法不太符合面向对象的思想，面向对象的做法是：让字符串本身来做这种转换，而不是把工作交给一个外部方法。可以打开String类，植入to_alphanumeric()方法，修改后的代码：</p>
+
+<pre>
+<code id="code-customize">
+class String
+  def to_alphanumeric
+    gsub /[^\w\s]/, ''
+  end
+end
+#unit test
+require 'test/unit'
+class StringExtensionsTest &lt; Test::Unit::TestCase
+  def test_strips_non_alphanumeric_characters
+    assert_equal '3 the Magic Number', '#3, the *Magic, Number* ?'.to_alphanumeric
+  end
+end
+</code>
+</pre>
+
+<p>这样的做法会对Ruby 的标准库造成”污染”,也可能造成冲突,应该三思而后行,看下面的例子[替换]：</p>
+
+<pre>
+<code id="code-customize">
+def replace(array, from, to) 
+  array.each_with_index do |e, i|
+    array[i] = to if e == from
+  end
+end
+#unit test
+def test_replace
+  book_topics = ['html', 'java', 'css']
+  replace(book_topics, 'java', 'ruby')
+  expected = ['html', 'ruby', 'css']
+  assert_equal expected, book_topics
+end
+</code>
+</pre>
+
+<p>按照[打开类]的思想，我们可以把这个方法移植到Array类中去：</p>
+
+<pre>
+<code id="code-customize">
+class Array
+  def replace(from, to)
+    each_with_index do |e, i|
+      self[i] = to if e == from
+    end
+  end
+end
+#unit test
+def test_replace
+  book_topics = ['html', 'java', 'css']
+  book_topics.replace('java', 'ruby')
+  expected = ['html', 'ruby', 'css']
+  assert_equal expected, book_topics
+end
+</code>
+</pre>
+
+<p>可是测试失败了，我们来看Array 类中所有以”re”大头的方法：</p>
+
+<p>[ ].methods.grep /^re/ # =&gt; [:replace, :reject, :reject!, :respond_to?, …]</p>
+
+<p>已经有replace方法了，产生冲突。</p>
+
+<h4 id="self">Self</h4>
+
+<p>你的代码调用的是哪个对象的方法，那么这个对象就成为self</p>
+
+<h4 id="section">实例变量</h4>
+
+<p>Ruby 中对象的类和他的实例变量没有关系，当给实例变量赋值时，他们才生成，不调用obj.method()方法，那么obj对象根本不会有任何的实例变量。</p>
+
+<h4 id="module">Module搞定命名冲突问题</h4>
+
+<p>使用命名空间可以轻松搞定命名冲突问题：</p>
+
+<pre>
+<code id="code-customize">
+module Bookworm
+  class Text
+    # ...
+  end
+end
+</code>
+</pre>
+
+<h4 id="section-1">方法调用过程</h4>
+
+<p>一：查找方法，二：执行方法.通过祖先链向上一级一级查找方法,来看一个复杂的例子：</p>
+
+<pre>
+<code id="code-customize">
+module Printable
+  def print
+    #...
+  end
+  def prepare_cover
+    #...
+  end
+end
+module Document
+  def print_to_screen
+    prepare_cover
+    format_for_cover
+    print
+  end
+  def format_for_screen
+    #...
+  end
+  def print
+    #...
+  end
+end
+class Book
+  include Document
+  include Printable
+  #...
+end
+</code>
+</pre>
+
+<p>创建了一个对象，并调用print_to_screen()</p>
+
+<pre>
+<code id="code-customize">
+b = Book.new
+b.print_to_screen
+</code>
+</pre>
+
+<p>根据bug管理系统，这段代码有问题：print_to_screen()方法没有调用正确的print()方法，除此之外没有其他信息。到底调用的是哪个print()方法呢？我们来看看Book的祖先链：</p>
+
+<p>Book.ancestors # =&gt; [Book, Printable, Document, Object, Kernel, …] </p>
+
+<p>Printable在Document前面，所以是调用的Printable的print方法，而本意是调用Document的print方法，所以我们只需让Document的位置在Printable之前：</p>
+
+<pre>
+<code id="code-customize">
+class Book
+  include Printable
+  include Document
+  #...
+end
+</code>
+</pre>
+
+<p>Book.ancestors # =&gt; [Book, Document, Printable, Object, Kernel, …] </p>
+
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>
