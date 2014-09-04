@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Oracle 常用操作</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+      <div class="subtit">我的世界有你们而精彩</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/tags.html">标签分类</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Oracle 常用操作</h2>
+    <div class="detail-time">04 Sep 2014</div>
+    <div class="detail-cont">
+      <h4 id="oracle-">Oracle 默认创建的三个用户</h4>
+
+<p><b>sys</b>: 超级管理员，权限最高，角色为dba,初始密码为change_on_install</p>
+
+<p><b>system</b>: 系统管理员，权限高，角色为dbaoper,初始密码为manager</p>
+
+<p><b>scott</b>: 普通用户，初始密码为tiger</p>
+
+<p><b>sys与system的区别</b>：sys 有create database的权限，而system没有，其他相似; 日常管理中，使用system就够了。</p>
+
+<h4 id="oracle--1">Oracle 常用操作</h4>
+
+<p><b>连接数据库</b>：conn[ect] 用户名/密码 [as sysdba/sysoper];   当用特权用户身份连接时，带上 as sysdba 或 as sysoper.</p>
+
+<p><b>断开连接</b>：disc[onnect]</p>
+
+<p><b>修改密码</b>：passw[ord] 用户名; 当给别人修改密码时需要dba权限，或者拥有alter user的系统权限：alter user 用户名 identified by 新密码;</p>
+
+<p><b>运行sql脚本</b>：start d:\a.sql;</p>
+
+<p><b>spool命令</b>：可以将sql*plus屏幕上的内容输出到指定文件中去；用法：spool 文件名; sql语句; spool off;</p>
+
+<p><b>linesize</b>: 设置显示行的宽度; 用法：set linesize 20;</p>
+
+<p><b>pagesize</b>: 设置每页显示行数目; 用法：set pagesize 20;</p>
+
+<h4 id="section">用户管理</h4>
+
+<p><b>创建用户</b>: create user 用户名 identified by mima; 创建的新用户是没有任何权限的，甚至连登陆数据库的权限都没有，需要为其指定相应的权限，给一个用户赋予权限命令：grant; 回收权限命令:revoke。</p>
+
+<p><b>删除用户</b>: drop user 用户名 [cascade]; 如果要同时删除用户所建的表，就需要带参数 cascade.</p>
+
+<p><b>oracle权限</b>：分为系统权限[用户对数据库的相关权限]，对象权限[用户对其他用户的数据对象操作的权限]</p>
+
+<p><b>对象权限</b>：select, insert, update, create index, …, all</p>
+
+<p><b>赋予系统权限</b>：grant connect to xiaoming; 其中connect称为角色，这种角色包含多种权限。角色分为：预定义角色和自定义角色，常用的角色有：connect, dba, resource…</p>
+
+<p><b>赋予对象权限</b>：grant select on scott.emp to xiaoming; 即赋予小明查询scott的emp表的权限。</p>
+
+<p><b>收回对象权限</b>：revoke select on scott.emp from xiaoming;</p>
+
+<p><b>权限的传递</b>：grant select on scott.emp to xiaoming with grant option; 则小明可以把查询scott.emp的权限赋予其他人。</p>
+
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>
