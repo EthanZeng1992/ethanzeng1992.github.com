@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Oracle 数据类型和表操作</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+      <div class="subtit">我的世界有你们而精彩</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/tags.html">标签分类</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Oracle 数据类型和表操作</h2>
+    <div class="detail-time">06 Sep 2014</div>
+    <div class="detail-cont">
+      <h4 id="oracle-">Oracle 数据类型</h4>
+
+<p><b>char</b>: 定长，最大2000字符，char型查询速度快，效率高,长度固定且经常查询的字段选char；char(10)对于’小寒’，前四个字符放’小寒’,后添6个空格补全。 </p>
+
+<p><b>varchar2</b>: 变长，最大4000字符,查询速度慢，节省空间；varchar2(20)对于’小寒’只分配4个字符。 </p>
+
+<p><b>clob</b>: (character large object),字符型大对象，最大4G。 </p>
+
+<p><b>number</b>: -10^38 ~ 10^38;可表示整数也可表示小数，number(5,2)：-999.99 ~ 999.99; number(5)：-99999 ~ 99999。 </p>
+
+<p><b>date</b>：日期类型，包含年月日时分秒。</p>
+
+<p><b>timestamp</b>：日期类型，相对date更精确，ms级别。</p>
+
+<p><b>blob</b>：图片/声音类二进制数据，最大4G；图片/声音类文件通常存放在某个文件夹下，而数据库中只存路径，如果对数据安全性很高，则存于数据库中。</p>
+
+<h4 id="oracle--1">Oracle 常用表操作</h4>
+
+<p><b>表操作</b>：</p>
+
+<pre>
+<code id="code-customize">
+sql&gt; create table student (xuehao number(4),          //创建
+sql&gt;   name varchar2(20), sex char(2),
+sql&gt;   birthday date, salary number(7,2)
+sql&gt; ); 
+sql&gt; drop table student;                              //删除
+sql&gt; rename student to stu;                           //修改
+</code>
+</pre>
+
+<p><b>字段操作</b>:</p>
+<pre>
+<code id="code-customize">
+sql&gt; alter table student add (classid number(2));      //添加 
+sql&gt; alter table student modify (name varchar2(30));   //修改 
+sql&gt; alter table student drop column salary;           //删除 
+</code>
+</pre>
+
+<p><b>数据操作</b>:</p>
+
+<pre>
+<code id="code-customize">
+sql&gt; insert into student values ('A001', '张三', '男', '10');          //添加 
+sql&gt; insert into student (xuehao, name) values ('A001', '张三');       //添加 
+sql&gt; update student set sex='男', salary=salary/2 where xuehao='A001'; //修改
+sql&gt; delete from student where xuehao='A001';                          //删除 
+sql&gt; delete from student;        //删除所有 
+sql&gt; truncate table student;     //删除所有 
+</code>
+</pre>
+
+<p>其中truncate table student; 删除表中的所有记录，表结构还在，不写日志，无法找回删除记录，但是删除速度快；delete from student;删除后可以恢复数据，通过设置回滚点：</p>
+
+<pre>
+<code id="code-customize">
+sql&gt; savepoint point1; 
+sql&gt; delete from student; 
+sql&gt; rollback to point1; 
+</code>
+</pre>
+
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>

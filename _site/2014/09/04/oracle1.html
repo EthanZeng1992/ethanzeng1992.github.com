@@ -71,15 +71,21 @@
 
 <h4 id="oracle--1">Oracle 常用操作</h4>
 
-<p><b>连接数据库</b>：conn[ect] 用户名/密码 [as sysdba/sysoper];   当用特权用户身份连接时，带上 as sysdba 或 as sysoper.</p>
-
-<p><b>断开连接</b>：disc[onnect]</p>
+<p><b>连接数据库</b>：conn[ect] 用户名/密码 [as sysdba/sysoper];   当用特权用户身份连接时，带上 as sysdba 或 as sysoper。断开连接：disc[onnect]</p>
 
 <p><b>修改密码</b>：passw[ord] 用户名; 当给别人修改密码时需要dba权限，或者拥有alter user的系统权限：alter user 用户名 identified by 新密码;</p>
 
-<p><b>运行sql脚本</b>：start d:\a.sql;</p>
+<p><b>spool命令</b>：可以将sql*plus屏幕上的内容输出到指定文件中去；例如把student输入到文件a.sql中：</p>
 
-<p><b>spool命令</b>：可以将sql*plus屏幕上的内容输出到指定文件中去；用法：spool 文件名; sql语句; spool off;</p>
+<pre>
+<code id="code-customize">
+sql&gt; spool d:\a.sql;
+sql&gt; select * from student; 
+sql&gt; spool off; 
+</code>
+</pre>
+
+<p><b>运行sql脚本</b>：start d:\a.sql;</p>
 
 <p><b>linesize</b>: 设置显示行的宽度; 用法：set linesize 20;</p>
 
@@ -87,21 +93,61 @@
 
 <h4 id="section">用户管理</h4>
 
-<p><b>创建用户</b>: create user 用户名 identified by mima; 创建的新用户是没有任何权限的，甚至连登陆数据库的权限都没有，需要为其指定相应的权限，给一个用户赋予权限命令：grant; 回收权限命令:revoke。</p>
+<p><b>创建与删除用户</b>: </p>
 
-<p><b>删除用户</b>: drop user 用户名 [cascade]; 如果要同时删除用户所建的表，就需要带参数 cascade.</p>
+<pre>
+<code id="code-customize">
+sql&gt; create user 用户名 identified by 密码;
+sql&gt; drop user 用户名 [cascade];
+</code>
+</pre>
 
-<p><b>oracle权限</b>：分为系统权限[用户对数据库的相关权限]，对象权限[用户对其他用户的数据对象操作的权限]</p>
+<p>如果要同时删除用户所建的表，就需要带参数 cascade。创建的新用户是没有任何权限的，甚至连登陆数据库的权限都没有，需要为其指定相应的权限，oracle权限分为系统权限 [用户对数据库的相关权限] ，对象权限 [用户对其他用户的数据对象操作的权限] ; 对象权限有select, insert, update, create index, …, all。给一个用户赋予权限命令：grant; 回收权限命令:revoke。</p>
 
-<p><b>对象权限</b>：select, insert, update, create index, …, all</p>
+<p><b>赋予与收回权限</b>：</p>
 
-<p><b>赋予系统权限</b>：grant connect to xiaoming; 其中connect称为角色，这种角色包含多种权限。角色分为：预定义角色和自定义角色，常用的角色有：connect, dba, resource…</p>
+<pre>
+<code id="code-customize">
+sql&gt; grant select on scott.emp to xiaoming;
+sql&gt; grant connect to xiaoming;
+sql&gt; revoke select on scott.emp from xiaoming;
+</code>
+</pre>
 
-<p><b>赋予对象权限</b>：grant select on scott.emp to xiaoming; 即赋予小明查询scott的emp表的权限。</p>
+<p>即赋予小明查询scott的emp表的权限；其中connect称为角色，这种角色包含多种权限。角色分为预定义角色和自定义角色，常用的角色有：connect, dba, resource…</p>
 
-<p><b>收回对象权限</b>：revoke select on scott.emp from xiaoming;</p>
+<p><b>权限的传递</b>： </p>
 
-<p><b>权限的传递</b>：grant select on scott.emp to xiaoming with grant option; 则小明可以把查询scott.emp的权限赋予其他人。</p>
+<pre>
+<code id="code-customize">
+sql&gt; grant select on scott.emp to xiaoming with grant option;
+sql&gt; grant connect to xiaoming with admin option;
+</code>
+</pre>
+
+<p>则小明可以把查询scott.emp的权限和把角色connect拥有的权限赋予其他人;若小明的权限被收回，那小明下面的人的权限也同时被收回。</p>
+
+<h4 id="profile">profile管理用户口令</h4>
+
+<p><b>账户锁定</b>: 可指定用户最多尝试登陆次数3，及锁定时间两天; 超级管理员也可解锁</p>
+
+<pre>
+<code id="code-customize">
+sql&gt; create profile lock_account limit failed_login_attempts 3 password_lock_time 2; 
+sql&gt; alter user xiaoming profile lock_account; 
+sql&gt; alter user xiaoming account unlock; 
+</code>
+</pre>
+
+<p><b>定期修改密码</b>: 可指定用户每隔10天修改密码，宽限为2天，密码20天后可重复使用;也可删除某种profile： </p>
+
+<pre>
+<code id="code-customize">
+sql&gt; create profile modify_password limit password_life_time 10 password_grace_time 2 password_reuse_time 10; 
+sql&gt; alter user xiaoming profile modify_password; 
+sql&gt; drop profile modify_password [cascade]; 
+</code>
+</pre>
 
 
     </div>
