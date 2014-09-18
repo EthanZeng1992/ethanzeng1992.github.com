@@ -1,9 +1,34 @@
 ---
 layout: default
-title: GM的博客
+title: Archives Ethan Blog 
 ---
-<div class="content-wrap">
-	<div class="under-construction">
-		正在建设中。。。
-	</div>
+
+<div class="article">
+  {% for post in site.posts  %}
+    {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+    {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
+
+    {% if forloop.first %}
+    <ul>
+      <li>
+        <span class="date-year">{{this_year}}</span>
+        <ul>
+    {% endif %}
+          <li class="archives-li">
+            <span class="archives-date">{{ post.date | date: "%b %d" }}</span> : <a class="archives-title" href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+          </li>
+    {% if forloop.last %}
+        </ul>
+      </li>
+    </ul>
+    {% else %}
+      {% if this_year != next_year %}
+        </ul>
+      </li>
+      <li>
+        <span class="date-year">{{next_year}}</span>
+        <ul>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
 </div>

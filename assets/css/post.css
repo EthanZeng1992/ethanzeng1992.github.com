@@ -12,4 +12,30 @@ code {
 
 #code-customize {
   padding-top: 0;
+  font: Monaco, Courier, Monospace;
+}
+
+.date-year {
+  font-size: 30px;
+  color: #ee4444;
+}
+
+.archives-li {
+  padding: 10px 20px;
+  font-size: 15px;
+}
+
+.archives-date {
+  color: #A7AAB1;
+  font-size: 15px;
+}
+
+.archives-title {
+  color: black;
+  font-size: 18px;
+  padding-left: 15px;
+}
+
+.archives-title:hover {
+  color: #0088cc;
 }
