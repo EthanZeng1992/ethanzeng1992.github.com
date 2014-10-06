@@ -6,19 +6,19 @@ description: 主要记录oracle数据库的基本数据类型以及如何创建�
 
 ####Oracle 数据类型 
 
-<b>char</b>: 定长，最大2000字符，char型查询速度快，效率高,长度固定且经常查询的字段选char；char(10)对于'小寒'，前四个字符放'小寒',后添6个空格补全。 
+<span class="circle"></span><b>char</b>: 定长，最大2000字符，char型查询速度快，效率高,长度固定且经常查询的字段选char；char(10)对于'小寒'，前四个字符放'小寒',后添6个空格补全。 
 
-<b>varchar2</b>: 变长，最大4000字符,查询速度慢，节省空间；varchar2(20)对于'小寒'只分配4个字符。 
+<span class="circle"></span><b>varchar2</b>: 变长，最大4000字符,查询速度慢，节省空间；varchar2(20)对于'小寒'只分配4个字符。 
 
-<b>clob</b>: (character large object),字符型大对象，最大4G。 
+<span class="circle"></span><b>clob</b>: (character large object),字符型大对象，最大4G。 
 
-<b>number</b>: -10^38 ~ 10^38;可表示整数也可表示小数，number(5,2)：-999.99 ~ 999.99; number(5)：-99999 ~ 99999。 
+<span class="circle"></span><b>number</b>: -10^38 ~ 10^38;可表示整数也可表示小数，number(5,2)：-999.99 ~ 999.99; number(5)：-99999 ~ 99999。 
 
-<b>date</b>：日期类型，包含年月日时分秒。
+<span class="circle"></span><b>date</b>：日期类型，包含年月日时分秒。
 
-<b>timestamp</b>：日期类型，相对date更精确，ms级别。
+<span class="circle"></span><b>timestamp</b>：日期类型，相对date更精确，ms级别。
 
-<b>blob</b>：图片/声音类二进制数据，最大4G；图片/声音类文件通常存放在某个文件夹下，而数据库中只存路径，如果对数据安全性很高，则存于数据库中。
+<span class="circle"></span><b>blob</b>：图片/声音类二进制数据，最大4G；图片/声音类文件通常存放在某个文件夹下，而数据库中只存路径，如果对数据安全性很高，则存于数据库中。
 
 ####Oracle 常用表操作 
 

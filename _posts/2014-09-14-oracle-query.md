@@ -90,7 +90,7 @@ sql> select worker.ename, boss.ename from table1 worker, table1 boss where worke
 
 ####子查询
 
-指嵌入在其它aql语句中的select语句，单行子查询：只返回一行数据的子查询； 多行子查询：返回多行数据的子查询；多列子查询：返回多列的子查询。
+指嵌入在其它sql语句中的select语句，单行子查询：只返回一行数据的子查询； 多行子查询：返回多行数据的子查询；多列子查询：返回多列的子查询。
 
 <pre>
 <code id='code-customize'>

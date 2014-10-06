@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="author" content="ygm">
   <meta name="description" content="ygm blog">
-  <title>Categories-Ethan-Blog</title>
+  <title>Oracle 事务处理及常用函数</title>
   <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
   <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
   <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
@@ -40,9 +40,7 @@
             
               
               
-                
-              
-              <li class="active">
+              <li >
                   <a href="/tags.html">标签分类</a>
               </li>
             
@@ -56,33 +54,35 @@
       </div>
   </div>
 </div>
-<div class="page-title-inline">
-	<h1>Categories-Ethan-Blog 
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Oracle 事务处理及常用函数</h2>
+    <div class="detail-time">20 Sep 2014</div>
+    <div class="detail-cont">
+      <h4 id="oracle-">Oracle 事务处理</h4>
+
+<div class="block">
+事务可以看作是由对数据库的若干操作组成的一个单元，这些操作要么都完成，要么都取消，从而保证数据满足一致性的要求。事务的一个典型例子是银行中的转帐操作，帐户A把一定数量的款项转到帐户B上，这个操作包括两个步骤，一个是从帐户A上把存款减去一定数量，二是在帐户B上把存款加上相同的数量。这两个步骤显然要么都完成，要么都取消，否则银行就会受损失。显然，这个转帐操作中的两个步骤就构成一个事务。
 </div>
-<div class="cont932">
-	<hr style="margin-top: 0;">
-	<div class="contentarea">
-		<div class="ca-center ca-center20t nobg">
-			<div class="journal-tags" id="teaminfo">
-			  
 
-                                  
+<p><span class="circle"></span><b>锁</b>: 当执行事务操作时，oracle会在被作用的表上加锁，防止其它用户改表的结构。首先应用进程先检查是否有等待队列，若有等待队列则直接排队等候，若没有则检查锁的状态，看是否可以对表进行操作。</p>
 
-        
-			</div>
-			<div class="clearboth"></div>
-			<hr>
-			<div>
-			
-			
-			</div>
-			<div class="clearboth"></div>
-		</div>
-	</div>
-	<div class="clearboth"></div>
+<p><span class="circle"></span><b>提交事务</b>: 当执行commit语句后，可以提交事务，会确认事务的变化，结束事务，删除保存点，释放锁。</p>
+
+<p><span class="circle"></span><b>只读事务</b>: set transaction read only; 只允许执行查询操作，而不允许执行任何其他dml操作的事务，使用只读事务可以确保用户只能取得某时间点的数据。 </p>
+
+<pre>
+<code id="code-customize">
+sql&gt; savepoint point1; 
+sql&gt; delete from student; 
+sql&gt; rollback to point1; 
+</code>
+</pre>
+
+
+    </div>
+  </div>
 </div>
-<div class="clearboth"></div>
-
 <a href="###" class="goto-top"></a>
 <div class="footer-wrap">
   <div class="footer">
