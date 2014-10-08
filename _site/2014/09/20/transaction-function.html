@@ -71,11 +71,41 @@
 
 <p><span class="circle"></span><b>只读事务</b>: set transaction read only; 只允许执行查询操作，而不允许执行任何其他dml操作的事务，使用只读事务可以确保用户只能取得某时间点的数据。 </p>
 
+<h4 id="oracle--1">Oracle 常用函数</h4>
+
+<p><span class="circle"></span><b>字符函数</b></p>
+
 <pre>
 <code id="code-customize">
-sql&gt; savepoint point1; 
-sql&gt; delete from student; 
-sql&gt; rollback to point1; 
+lower(char)        //转化为小写格式
+upper(char)        //转化为大写格式
+length(char)       //返回字符串的长度
+substr(char, m, n) //从m个字符开始取n个字符
+char1 || char2     //连接字符串
+replace(char1, search_string, replace_string) //替换字符串
+</code>
+</pre>
+
+<p><span class="circle"></span><b>数学函数</b></p>
+
+<pre>
+<code id="code-customize">
+round(n, m) //四舍五入，保留m为小数；若m为负数，则四舍五入到小数点前m位
+trunc(n, m) //截取数字，m为正则截取到小数点的m位；m为负数则截取到小数点前m位
+floor(n)    //返回小于或者等于n的最大整数
+ceil(n)     //返回大于或者等于n的最小整数
+mod(n, m)   //返回n/m的余数
+</code>
+</pre>
+
+<p><span class="circle"></span><b>日期函数</b></p>
+
+<pre>
+<code id="code-customize">
+sysdate             //返回系统时间
+add_months(date, n) //时间date加n个月   
+sql&gt; select * from emp where sysdate &gt; add_months(hiredate, 8);
+last_day(date)      //返回指定日期那个月的倒数第一天
 </code>
 </pre>
 

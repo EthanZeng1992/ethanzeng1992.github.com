@@ -107,6 +107,10 @@ a{text-decoration: none;}
   background:rgba(0, 0, 0, 0.9) url("../img/arrow.png") no-repeat center;
 }
 
+.goto-top:hover {
+  background-color: #0088cc;
+}
+
 .footer-wrap{background-color: rgba(0,0,0,.8);}
 .footer{
   color: #e5e5e5;

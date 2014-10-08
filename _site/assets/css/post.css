@@ -12,7 +12,7 @@ code {
 
 #code-customize {
   padding-top: 0;
-  font: Monaco, Courier, Monospace;
+  font: 18px/30px Consolas, "Courier New", Courier, monospace;
 }
 
 .date-year {
