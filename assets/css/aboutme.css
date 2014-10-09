@@ -1,0 +1,10 @@
+.contact-li {
+  font-weight: 700;
+  color: rgb(80, 75, 75);
+  padding-right: 10px;
+}
+
+.contact-cont {
+  color: rgb(80, 75, 75);
+  font-style: italic;
+}

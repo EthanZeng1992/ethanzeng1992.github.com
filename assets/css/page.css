@@ -27,7 +27,8 @@ a{text-decoration: none;}
 .logo{
   font-size: 60px;position: absolute;top: 50px;left: 0;
   cursor: pointer;
-  font-family: 'Alfa Slab One', cursive;
+  font-family: 'Comic Sans MS', cursive;
+  /*font: 70px/100px Consolas, "Courier New", Courier, monospace;*/
 }
 .logo:hover{color: red;}
 .subtit{
