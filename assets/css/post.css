@@ -40,13 +40,20 @@ code {
   color: #0088cc;
 }
 
-.block {
+.block-blue {
   padding: 10px;
   margin: 20px 0 24px;
   border-left: 3px solid #0088cc;
   border-radius: 0 3px 3px 0;
   color: #8d8d8d;
-  font-style: italic;
+}
+
+.block-red {
+  padding: 10px;
+  margin: 20px 0 24px;
+  border-left: 3px solid #CC0000;
+  border-radius: 0 3px 3px 0;
+  color: #8d8d8d;
 }
 
 .circle {

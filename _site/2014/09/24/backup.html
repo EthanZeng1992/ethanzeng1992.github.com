@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Oracle 逻辑备份与恢复</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/aboutme.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Oracle 逻辑备份与恢复</h2>
+    <div class="detail-time">24 Sep 2014</div>
+    <div class="detail-cont">
+      <h4 id="oracle-">Oracle 备份</h4>
+
+<p><span class="circle"></span><b>导出表：</b>导出自己的表，导出其他方案的表，导出表的结构，直接方式导出表</p>
+
+<pre>
+<code id="code-customize">
+sql&gt; exp userid=scott/tiger@myoral tables=(emp, dept) file=d:\e1.dmp;    //导出自己的表
+sql&gt; exp userid=system/manager@myoral tables=(scott.emp) file=d:\e2.dmp; //导出其他方案的表
+sql&gt; exp userid=scott/tiger@myoral tables=(emp) file=d:\e3.dmp rows=n;   //导出表的结构
+sql&gt; exp userid=scott/tiger@myoral tables=(emp) file=d:\e4.dmp direct=y; //使用直接导出方式
+</code>
+</pre>
+
+<div class="block-red">
+<b>注：</b>在导入导出的时候，要到oracle目录下的bin目录下执行以上命令。使用直接导出方式比默认的常规方式速度要快，当数据量大时可以考虑这样的方式。
+</div>
+
+<p><span class="circle"></span><b>导出方案：</b>导出自己的方案，导出其他人的方案，导出数据库</p>
+
+<pre>
+<code id="code-customize">
+sql&gt; exp userid=scott/tiger@myoral owner=scott file=d:\scott.dmp;              //导出自己的方案
+sql&gt; exp userid=system/manager@myoral owner=scott file=d:\system.dmp;          //导出其他人的方案
+sql&gt; exp userid=system/manager@myoral full=y inctype=complete file=d:\sys.dmp; //导出数据库
+</code>
+</pre>
+
+<div class="block-red">
+<b>注：</b>inctype=complete :增量备份，备份一次过后，第二次的速度会快点，检查是否有更新的数据，只添加新的数据.
+</div>
+
+<h4 id="oracle--1">Oracle 恢复</h4>
+
+<p><span class="circle"></span><b>导入表 :</b>导入自己的表，导入表到其他用户，导入表的结构(不导入数据),导入数据(若表已经存在则只导入数据)</p>
+
+<pre>
+<code id="code-customize">
+sql&gt; imp userid=scott/tiger@myoral tables=emp file=d:\emp.dmp;                    //导入自己的表
+sql&gt; imp userid=system/manager@myoral tables=emp file=d:\system.dmp touser=scott; //导入表到其他用户
+sql&gt; imp userid=scott/tiger@myoral tables=emp file=d:\emp.dmp rows=n;             //导入表的结构
+sql&gt; imp userid=scott/tiger@myoral tables=emp file=d:\emp.dmp ignore=y;           //导入数据
+</code>
+</pre>
+
+<p><span class="circle"></span><b>导入方案,数据库</b></p>
+
+<pre>
+<code id="code-customize">
+sql&gt; imp userid=scott/tiger@myoral file=d:\emp.dmp;                                    //导入自己的方案
+sql&gt; imp userid=system/manager@myoral file=d:\system.dmp fromuser=system touser=scott; //导入别人的方案
+sql&gt; imp userid=system/manager@myoral full=y file=d:\system.dmp;                       //导入数据库
+</code>
+</pre>
+
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>
