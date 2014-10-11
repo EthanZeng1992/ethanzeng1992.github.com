@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Terminal & vim with solarized</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/aboutme.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Terminal & vim with solarized</h2>
+    <div class="detail-time">10 Jul 2013</div>
+    <div class="detail-cont">
+      <h4 id="getting-started">Getting Started</h4>
+
+<p><span class="circle"></span><b>Install oh-my-zsh</b></p>
+
+<pre>
+<code id="code-customize">
+$ sudo apt-get install zsh 
+$ wget --no-check-certificate http://install.ohmyz.sh -O - | sh
+$ chsh -s `which zsh` #change your shell to zsh
+</code>
+</pre>
+
+<p><span class="circle"></span><b>Install and config tmux</b></p>
+
+<pre>
+<code id="code-customize">
+$ sudo apt-get install tmux 
+$ vim .tmux.conf
+</code>
+</pre>
+
+<script src="https://gist.github.com/EthanZeng1992/4ad83707c65e344e5842.js"></script>
+
+<h4 id="setup-terminal-and-vim-color-solarized">Setup terminal and vim color: solarized</h4>
+
+<p><span class="circle"></span><b>Setup terminal dircolors</b></p>
+
+<pre>
+<code id="code-customize">
+$ git clone git://github.com/seebi/dircolors-solarized.git
+$ cp ~/dircolors-solarized/dircolors.256dark ~/.dircolors
+$ eval 'dircolors .dircolors'
+$ source .bashrc
+</code>
+</pre>
+
+<p><span class="circle"></span><b>Setup terminal color:solarized</b></p>
+
+<pre>
+<code id="code-customize">
+$ git clone git://github.com/sigurdga/gnome-terminal-colors-solarized.git
+$ cd gnome-terminal-colors-solarized
+$ ./set_dark.sh
+</code>
+</pre>
+
+<p><span class="circle"></span><b>Install vundleInstall vundle</b></p>
+
+<pre>
+<code id="code-customize">
+$ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</code>
+</pre>
+
+<p><span class="circle"></span><b>Copy my_vimrc to ‘/etc/vim/vimrc’</b></p>
+
+<pre>
+<code id="code-customize">
+[my_vimrc]: https://github.com/EthanZeng1992/my-config-file/blob/master/my_vimrc
+</code>
+</pre>
+
+<p><span class="circle"></span><b>Move solarized.vim to ‘/.vim/colors/’</b></p>
+
+<pre>
+<code id="code-customize">
+[solarized.vim]: https://github.com/EthanZeng1992/my-config-file/blob/master/solarized.vim
+</code>
+</pre>
+
+<p><span class="circle"></span><b>Config vim in tmux color: solarized</b></p>
+
+<pre>
+<code id="code-customize">
+alias tmux="TERM=screen-256color-bce tmux" #Add this line to .zshrc
+set -g default-terminal "screen-256color"  #add this line to .tmux.conf
+</code>
+</pre>
+
+<h4 id="config-neocomplcache-work-with-sudo-vim">Config neocomplcache work with “sudo vim”</h4>
+
+<p><b>Comment these line in: &lt; .vim/bundle/neocomplcache/plugin/neocomplcache.vim &gt;</b></p>
+
+<pre>
+<code id="code-customize">
+if v:version &lt; 702  
+  echohl Error  
+  echomsg 'neocomplcache does not work this version of Vim (' . v:version . ').'  
+ #echohl None  
+ #finish  
+ #eseif $SUDO_USER != '' &amp;&amp; $USER !=# $SUDO_USER  
+ #    \ &amp;&amp; $HOME !=# expand('~'.$USER)  
+ #    \ &amp;&amp; $HOME ==# expand('~'.$SUDO_USER)  
+ #echohl Error  
+ #echomsg 'neocomplcache disabled: "sudo vim" is detected and $HOME is set to '  
+ #      \.'your user''s home. '  
+ #      \.'You may want to use the sudo.vim plugin, the "-H" option '  
+ #      \.'with "sudo" or set always_set_home in /etc/sudoers instead.'  
+  echohl None  
+  finish  
+endif  
+</code>
+</pre>
+
+<h4 id="reference">Reference</h4>
+
+<pre>
+<code id="code-customize">
+<a href="http://blog.csdn.net/angle_birds/article/details/11694325">http://blog.csdn.net/angle_birds/article/details/11694325</a>
+<a href="http://happycasts.net/episodes/41">http://happycasts.net/episodes/41</a>
+<a href="https://gist.github.com/tsabat/1498393">https://gist.github.com/tsabat/1498393</a>
+<a href="http://rhnh.net/2011/08/20/vim-and-tmux-on-osx">http://rhnh.net/2011/08/20/vim-and-tmux-on-osx</a>
+<a href="https://geakit.com/lilydjwg/dotvim/commit/eeae45ffcb380b6a8d5643f8a3c052c61bbf694e">https://geakit.com/lilydjwg/dotvim/commit/eeae45ffcb380b6a8d5643f8a3c052c61bbf694e</a>
+</code>
+</pre>
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>
