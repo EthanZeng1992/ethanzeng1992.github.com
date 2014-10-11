@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Rails Polymorphic many-to-many</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/aboutme.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Rails Polymorphic many-to-many</h2>
+    <div class="detail-time">15 Aug 2013</div>
+    <div class="detail-cont">
+      <h4 id="understand-span-classemphasizesourcespan-option-of-span-classemphasizehasonehasmany-throughspan">Understand <span class="emphasize">[:source]</span> option of <span class="emphasize">[has_one/has_many through]</span></h4>
+
+<div class="block-blue"> Sometimes, you want to use different names for different associations. If the name you want to use for an association on the model is not the same as the association on the <b>[:through]</b> model, you can use <b>[:source]</b> option to specify it.
+</div>
+
+<p><span class="circle"></span><b>Here is an example:</b> Assume we have three models: Pet, Dog and Dog::Breed</p>
+
+<pre>
+<code id="code-customer">
+class Pet &lt; ActiveRecord::Base
+  has_many :dogs
+end
+
+class Dog &lt; ActiveRecord::Base
+  belongs_to :pet
+  has_many :breeds
+end
+
+class Dog::Breed &lt; ActiveRecord::Base
+  belongs_to :dog
+end
+</code>
+</pre>
+
+<div class="block-blue">In this case, we have chosen to namespace the <span class="emphasize">Dog::Breed</span>, because we want to access <span class="emphasize">Dog.find(123).breeds</span> as a nice and convenient association. Now, if we want to create a <span class="emphasize">has_many :dog_breeds, :through =&gt; :dogs</span> association on Pet, we suddenly have a problem. Rails will not be able to find a <span class="emphasize">:dog_breeds</span> association on Dog, so Rails can not possibly know which Dog association you want to use. With <span class="emphasize">:source</span>, we are telling Rails to look for an association called :breeds on the Dog model, and use that.
+</div>
+
+<pre>
+<code id="code-customer">
+class Pet &lt; ActiveRecord::Base
+  has_many :dogs
+  has_many :dog_breeds, :through =&gt; :dogs, :source =&gt; :breeds
+end
+</code>
+</pre>
+
+<h4 id="understand-span-classemphasizesourcetypespan-option-of-polymorphic">Understand <span class="emphasize">:source_type</span> option of Polymorphic</h4>
+
+<p><span class="circle"></span><b>Assume we have models: Tag, Tagging, Book and Movie</b></p>
+
+<pre>
+<code id="code-customer">
+class Tag &lt; ActiveRecord::Base
+  has_many :taggings, :dependent =&gt; :destroy
+  has_many :books, :through =&gt; :tagings, :source =&gt; :taggable, :source_type =&gt; "Book"
+  has_many :movies, :through =&gt; :tagings, :source =&gt; :taggable, :source_type =&gt; "Movie"     
+end
+
+class Tagging &lt; ActiveRecord::Base
+  belongs_to :taggable, :polymorphic =&gt; true
+  belongs_to :tag
+end
+
+class Book &lt; ActiveRecord::Base
+  has_many :taggings, :as =&gt; :taggable
+  has_many :tags, :through =&gt; :taggings
+end
+    
+class Movie &lt; ActiveRecord::Base
+  has_many :taggings, :as =&gt; :taggable
+  has_many :tags, :through =&gt; :taggings
+end
+</code>
+</pre>
+
+<div class="block-blue">From the above code, we know that <span class="emphasize">:source_type</span> option is used only when <span class="emphasize">:source</span> option can not specify the target model in polymorphic.</div>
+
+<h4 id="reference">Reference</h4>
+
+<pre>
+<code id="code-customer">
+<a href="http://www.brentmc79.com/posts/polymorphic-many-to-many-associations-in-rails">http://www.brentmc79.com/posts/polymorphic-many-to-many-associations-in-rails</a>
+<a href="http://stackoverflow.com/questions/9500922/need-help-to-understand-source-type-option-of-has-one-has-many-through-of-rails">http://stackoverflow.com/questions/9500922/need-help-to-understand-source-type-option-of-has-one-has-many-through-of-rails</a>
+</code>
+</pre>
+
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>
