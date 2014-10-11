@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Oracle 之表空间</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/aboutme.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Oracle 之表空间</h2>
+    <div class="detail-time">30 Sep 2014</div>
+    <div class="detail-cont">
+      <h4 id="oracle-">Oracle 表空间作用</h4>
+
+<div class="block-blue">
+dba可以将不同数据类型部署到不同的位置，有利于控制数据库占用的磁盘空间，有利于提高i/o性能，有利于备份和恢复管理操作。
+</div>
+
+<h4 id="oracle--1">Oracle 表空间常用操作</h4>
+
+<p><span class="circle"></span><b>建立表空间，使用表空间，表空间脱机/联机，表空间只读，删除表空间</b></p>
+
+<pre>
+<code id="code-customize">
+sql&gt; create tablespace sp1 datafile 'd:\sp1.dbf' size 20m uniform size 128k;   //建表空间20m,区大小为128k 
+sql&gt; create table mypart(deptno number(4), dname varchar2(14)) tablespace sp1; //在表空间建表 
+sql&gt; alter tablespace tablespace_name offline;   //表空间脱机 
+sql&gt; alter tablespace tablespace_name online;    //表空间联机
+sql&gt; alter tablespace tablespace_name read only; //表空间只读
+sql&gt; drop tablespace tablespace_name including contents and datafiles; //删除表空间 
+</code>
+</pre>
+
+<h4 id="section">扩展表空间</h4>
+
+<p><span class="circle"></span><b>增加数据文件，增加数据文件的大小，设置文件的自动增长</b></p>
+
+<pre>
+<code id="code-customize">
+sql&gt; alter tablespace sp1 add datafile 'd:\sp1.dbf' size 20m; //增加数据文件 
+sql&gt; alter tablespace sp1 datafile 'd:\sp1.dbf' resize 40m;   //增加数据文件的大小 
+sql&gt; alter tablespace sp1 datafile 'd:\sp1.dbf' autoextend on next 10m maxsize 500m; //设置文件的自动增长
+</code>
+</pre>
+
+<h4 id="section-1">移动数据文件</h4>
+
+<p><span class="circle"></span>若数据文件所在的磁盘损坏时，需要将这些文件的副本移动到其他的磁盘，然后恢复。移动数据文件的步骤：脱机–&gt;移动–&gt;修改表空间–&gt;联机</p>
+
+<pre>
+<code id="code-customize">
+sql&gt; alter tablespace sp1 offline;        //脱机 
+sql&gt; host move 'd:\sp1.dbf' 'c:\sp1.dbf'; //移动 
+sql&gt; alter tablespace sp1 rename datafile 'd:\sp1.dbf' to 'c:\sp1.dbf'; //修改表空间逻辑 
+sql&gt; alter tablespace sp1 online; //联机
+</code>
+</pre>
+
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>
