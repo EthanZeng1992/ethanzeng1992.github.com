@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>Use Rvm to manage Ruby and Rails version</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/aboutme.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>Use Rvm to manage Ruby and Rails version</h2>
+    <div class="detail-time">20 Jul 2013</div>
+    <div class="detail-cont">
+      <h4 id="install-rvm">Install Rvm</h4>
+
+<pre>
+<code id="code-customer">
+$ curl -L get.rvm.io | bash -s stable
+$ source ~/.bashrc
+$ source ~/.bash_profile
+</code>
+</pre>
+
+<p><span class="circle"></span><b>Use Rvm to install Ruby</b></p>
+
+<pre>
+<code id="code-customer">
+$ rvm install 2.1.1
+$ rvm use 2.1.1 --default # set ruby-2.1.1 as default
+</code>
+</pre>
+
+<h4 id="create-specific-gemset">Create specific gemset</h4>
+
+<div class="block-blue">Sometimes we need different ruby &amp; rails version for different project, so we can create multiple environments for specific project.
+</div>
+
+<p><span class="circle"></span><b>Example-1: Project-1 use ruby-1.9.2 &amp; rails-3</b></p>
+
+<pre>
+<code id="code-customer">
+$ rvm install 1.9.2
+$ rvm use 1.9.2
+$ rvm gemset create rails3
+
+# create a file '.rvmrc' in Project-1/, content is: 
+rvm use ruby-1.9.2-p320@rails3 
+</code>
+</pre>
+
+<div class="ending">Done! now when we go to folder Project-1/, rvm will use gemset rails3 automatically.</div>
+
+<p></p>
+
+<p><span class="circle"></span><b>Example-2: Project-2 use ruby-2.1.1 &amp; rails-4</b></p>
+
+<pre>
+<code id="code-customer">
+$ rvm install 2.1.1
+$ rvm use 2.1.1
+$ rvm gemset create rails4
+
+# create a file '.rvmrc' in Project-2/, content is 
+rvm use ruby-2.1.1@rails4 
+</code>
+</pre>
+
+<div class="ending">Done! now when we go to folder Project-2/ rvm use gemset rails4 automatically.</div>
+
+<p></p>
+
+<h4 id="reference">Reference</h4>
+
+<pre>
+<code id="code-customer">
+<a href="http://ruby-china.org/wiki/rvm-guide">http://ruby-china.org/wiki/rvm-guide</a>
+</code>
+</pre>
+
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>
