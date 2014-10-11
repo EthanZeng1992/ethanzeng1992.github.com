@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="ygm">
+  <meta name="description" content="ygm blog">
+  <title>MongoDB and Mongoid for rails4</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/aboutme.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+  <!--<link rel="stylesheet" type="text/css" href="/assets/css/solarized_light.min.css">-->
+  <!--<script src="/assets/js/highlight.min.js"></script>-->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_light.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="header-wrap">
+  <div class="banner">
+    <img id="bgrain" src="/assets/img/b1.jpg" />
+  </div>
+  <div class="header">
+      <div class="logo">Ethan</div>
+  </div>
+  <div class="menu-wrap">
+      <div class="menu">
+          <ul class="nav">
+            
+              
+              
+              <li >
+                  <a href="/index.html">首页</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/archives.html">文章列表</a>
+              </li>
+            
+              
+              
+              <li >
+                  <a href="/aboutme.html">关于我</a>
+              </li>
+            
+          </ul>
+      </div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="article-detail">
+    <h2>MongoDB and Mongoid for rails4</h2>
+    <div class="detail-time">19 Aug 2014</div>
+    <div class="detail-cont">
+      <h4 id="getting-started">Getting Started</h4>
+
+<p><span class="circle"></span><b>install MongoDB from their official repository</b></p>
+
+<pre>
+<code id="code-customize">
+$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+$ sudo echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" | tee -a /etc/apt/sources.list.d/10gen.list
+$ sudo apt-get -y update
+$ sudo apt-get -y install mongodb-10gen
+</code>
+</pre>
+
+<div class="block-red">
+  <p><b>Notice:</b></p>
+
+  if you got 'tee: /etc/apt/sources.list.d/10gen.list: 权限不够' ; you should got super user: '$ sudo su' ; then try above command again.
+</div>
+
+<p><span class="circle"></span><b>Make sure you installed MongoDB, running the commands below will show corresponging infomations</b></p>
+
+<pre> 
+<code id="code-customize">
+$ mongod
+$ mongo
+MongoDB shell version: 2.4.10
+connecting to: test
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+        http://docs.mongodb.org/
+Questions? Try the support group
+        http://groups.google.com/group/mongodb-user
+&gt;
+</code>
+</pre>
+
+<p><span class="circle"></span><b>Generate Rails application and change Gemfile</b></p>
+
+<pre>
+<code id="code-customize">
+# Generate Rails application
+$ rails new myapp --skip-active-record
+
+# Change Gemfile
+# remove 
+# Use sqlite3 as the database for Active Record
+gem 'sqlite3'
+
+# add
+# mongodb
+gem 'mongoid', git: 'git://github.com/mongoid/mongoid.git'
+</code>
+</pre>
+
+<p><span class="circle"></span><b>Generate the Mongoid configuration file</b></p>
+
+<pre>
+<code id="code-customize">
+$ rails g mongoid:config
+</code>
+</pre>
+
+
+    </div>
+  </div>
+</div>
+<a href="###" class="goto-top"></a>
+<div class="footer-wrap">
+  <div class="footer">
+      © 2013 Developed by Ethan 
+  </div>
+</div>
+<script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/page.js"></script>
+</body>
+</html>
