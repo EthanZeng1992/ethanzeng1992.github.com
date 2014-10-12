@@ -55,7 +55,7 @@
     <div class="detail-cont">
       <h4 id="install-chrome-on-ubuntu">Install chrome on ubuntu</h4>
 
-<p>Run the commands below in the terminal to install chrome on ubuntu.</p>
+<p><span class="circle"></span><b>Run the commands below in the terminal to install chrome on ubuntu.</b></p>
 
 <pre>
 <code id="code-customize">
@@ -68,7 +68,9 @@ $ sudo apt-get install google-chrome-stable
 
 <h4 id="add-goagent-to-work-with-chrome">Add goagent to work with chrome</h4>
 
-<p>Download the goagent, just click there: <a href="http://goo.gl/qFyRk">GoAgent</a>, and then we need install some dependence, run the commands below.</p>
+<div class="block-blue">
+Download the goagent, just click there: <a href="http://goo.gl/qFyRk">GoAgent</a>, and then we need install some dependence, run the commands below.
+</div>
 
 <pre>
 <code id="code-customize">
@@ -78,7 +80,9 @@ $ sudo apt-get install python-openssl
 </code>
 </pre>
 
-<p>Upload: go to the folder: “goagent/server/” run command: <b>$ python uploader.zip</b>; Then import certificate</p>
+<div class="block-blue">
+Upload: go to the folder: "goagent/server/" run command: <b>$ python uploader.zip</b>; Then import certificate
+</div>
 
 <pre>
 <code id="code-customize">
@@ -87,11 +91,11 @@ $ certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i 'path_to_goagent/lo
 </code>
 </pre>
 
-<p>Make goagent run in the background default, we need write shell script: goagent.sh</p>
+<p><span class="circle"></span><b>Make goagent run in the background default, we need write shell script: goagent.sh</b></p>
 
 <script src="https://gist.github.com/EthanZeng1992/98237d187dc3f6f55831.js"></script>
 
-<p>Copy goagent.sh to folder (like: ~/soft/), then modify the file permission</p>
+<p><span class="circle"></span><b>Copy goagent.sh to folder (like: ~/soft/), then modify the file permission</b></p>
 
 <pre>
 <code id="code-customize">
@@ -102,7 +106,7 @@ $ sh /home/your_name/soft/goagent.sh # add this line to below
 </code>
 </pre>
 
-<p>Reference:</p>
+<h4 id="reference">Reference</h4>
 
 <pre>
 <code id="code-customize">

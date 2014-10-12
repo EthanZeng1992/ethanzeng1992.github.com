@@ -55,23 +55,23 @@
     <div class="detail-cont">
       <h4 id="git-fetch">git fetch</h4>
 
-<p>命令使用格式:</p>
+<div class="block-blue">
+当一个团队的其他成员提交了新的commit，并且push 到了远程，我们从远程获取最新版本到本地，暂时不merge: $ git fetch origin master; 比较本地的仓库和远程的区别: $ git log -p master.. origin/master; 然后再考虑是否合并,无误后合并：$ git merge origin/master。
+</div>
 
 <pre>
 <code id="code-customize">
 $ git fetch [remoteName] [branchName]
+$ git log -p master.. origin/master
+$ git merge origin/master
 </code>
 </pre>
 
-<p>当一个团队的其他成员提交了新的commit，并且push 到了远程，我们从远程获取最新版本到本地，暂时不merge: $ git fetch origin master; </p>
-
-<p>比较本地的仓库和远程的区别: $ git log -p master.. origin/master; </p>
-
-<p>然后再考虑是否合并,无误后合并：$ git merge origin/master.</p>
-
 <h4 id="git-pull">git pull</h4>
 
-<p>pull 与 fetch 的区别是：git pull 获取到远程版本后直接合并，而fetch 没有合并操作，所以fetch比pull更安全。</p>
+<div class="block-blue">
+pull 与 fetch 的区别是：git pull 获取到远程版本后直接合并，而fetch 没有合并操作，所以fetch比pull更安全。
+</div>
 
 <pre>
 <code id="code-customize">
@@ -81,41 +81,42 @@ $ git pull origin master
 
 <h4 id="git-diff">git diff</h4>
 
-<p>查看unstaged文件相对于前一次commit的改变：</p>
+<p></p>
 
 <pre>
 <code id="code-customize">
 $ git diff
+$ git diff --cached [或--staged]
+$ git diff HEAD
+$ git diff [branchName]
+$ git diff HEAD -- [fileName]
+$ git diff --stat
 </code>
 </pre>
 
-<p>查看staged文件相对于前一次commit的改变：$ git diff –cached [或–staged]; </p>
-
-<p>查看所有相对于前一次commit的改变：$ git diff HEAD ;</p>
-
-<p>查看当前目录相对于某一个分支的不同：git diff [branchName];</p>
-
-<p>查看某个文件相对于前一次commit的改变：$ git diff HEAD – [fileName];</p>
-
-<p>如果不是查看每个文件的详细差别，而是统计一下有哪些文件被改动，有多少行被改动: $ git diff –stat.</p>
+<div class="block-blue">
+查看unstaged文件相对于前一次commit的改变：$ git diff。查看staged文件相对于前一次commit的改变：$ git diff --cached [或--staged]。 查看所有相对于前一次commit的改变：$ git diff HEAD 。 查看当前目录相对于某一个分支的不同：$ git diff [branchName]。 查看某个文件相对于前一次commit的改变：$ git diff HEAD -- [fileName]。 如果不是查看每个文件的详细差别，而是统计一下有哪些文件被改动，有多少行被改动: $ git diff --stat。
+</div>
 
 <h4 id="git-">git 撤销</h4>
 
-<p>如果你现在的工作目录里搞的一团乱麻, 但是你现在还没有把它们提交(commit); 你可以通过下面的命令, 让工作目录回到上次提交时的状态(last committed state):</p>
+<div class="block-blue">
+如果你现在的工作目录里搞的一团乱麻, 但是你现在还没有把它们提交(commit); 你可以通过下面的命令, 让工作目录回到上次提交时的状态(last committed state):
+</div>
 
 <pre>
 <code id="code-customize">
 $ git reset --hard HEAD
+$ git checkout -- hello.rb
+$ git reset HEAD~n
+$ git reset --hard HEAD~n
+$ git revert HEAD~n
 </code>
 </pre>
 
-<p>这条件命令会把你工作目录中所有未提交的内容清空(当然这不包括未置于版控制下的文件 untracked files). 从另一种角度来说, 这会让”git diff” 和”git diff –cached”命令的显示都变为空.如果你只是要恢复一个文件至上次提交时的状态,如”hello.rb”: $ git checkout – hello.rb;</p>
-
-<p>取消最近n次commit,并且撤出暂存区，最近第n次commit之后所修改的内容都不会删除,只是未提交commit：$ git reset HEAD~n ;</p>
-
-<p>删除最近第n次commit即以后的所有内容，回退到最近第n+1次commit的状态: $ git reset –hard HEAD~n;</p>
-
-<p>对最近第(n+1)次commit做相反的操作,不对其他commit有影响：$ git revert HEAD~n.</p>
+<div class="block-blue">
+$ git reset --hard HEAD:这条件命令会把你工作目录中所有未提交的内容清空(当然这不包括未置于版控制下的文件 untracked files)。 从另一种角度来说, 这会让"git diff" 和"git diff --cached"命令的显示都变为空。如果你只是要恢复一个文件至上次提交时的状态,如"hello.rb": $ git checkout -- hello.rb。取消最近n次commit,并且撤出暂存区，最近第n次commit之后所修改的内容都不会删除,只是未提交commit：$ git reset HEAD~n 。删除最近第n次commit即以后的所有内容，回退到最近第n+1次commit的状态: $ git reset --hard HEAD~n。对最近第(n+1)次commit做相反的操作,不对其他commit有影响：$ git revert HEAD~n。
+</div>
 
 
     </div>

@@ -72,7 +72,7 @@ Password:
 </code>
 </pre>
 
-<p>If not show below words, we need add keys to heroku.</p>
+<p><span class="circle"></span><b>If not show below words, we need add keys to heroku.</b></p>
 
 <pre>
 <code id="code-customize">
@@ -83,9 +83,9 @@ Uploading ssh public key /Users/adam/.ssh/id_rsa.pub
 </code>
 </pre>
 
-<p>Run commands to add keys to heroku: </p>
-
-<p>first prompt we may Press enter at the first prompt to use the default file location, second and third prompt is to set password.</p>
+<div class="block-blue">
+Run commands to add keys to heroku: first prompt we may Press enter at the first prompt to use the default file location, second and third prompt is to set password.
+</div>
 
 <pre>
 <code id="code-customize">
@@ -101,6 +101,7 @@ Uploading SSH public key /Users/adam/.ssh/id_rsa.pub... done
 </pre>
 
 <h4 id="install-postgresql">Install postgresql</h4>
+
 <pre>
 <code id="code-customize">
 $ sudo apt-get install postgresql-9.1  
@@ -131,7 +132,7 @@ ruby "2.1.1" # for rails 4
 </code>
 </pre>
 
-<p>[config/database.yml] remove “username: myapp”</p>
+<p><span class="circle"></span><b>[config/database.yml] remove “username: myapp”</b></p>
 
 <h4 id="deploy-your-application-to-heroku">Deploy your application to Heroku</h4>
 
@@ -189,6 +190,7 @@ $ heroku run rake db:migrate
 <a href="https://github.com/19wu/19wu/wiki/%E9%83%A8%E7%BD%B2%E5%88%B0-heroku#toc-rails4">https://github.com/19wu/19wu/wiki/%E9%83%A8%E7%BD%B2%E5%88%B0-heroku#toc-rails4</a>
 </code>
 </pre>
+
 
     </div>
   </div>

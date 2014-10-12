@@ -71,5 +71,23 @@ code {
 }
 
 .emphasize {
-  color: rgb(10, 186, 255);
+  color: rgb(255, 60, 60);
 }
+
+.table-i {
+  border-collapse:collapse;
+}
+
+.table-i, .td-i, .th-i {
+  border:1px solid black;
+}
+
+.td-i, .th-i {
+  padding: 10px;
+}
+
+.th-i {
+  font-weight: bold;
+  text-align: center;
+}
+
